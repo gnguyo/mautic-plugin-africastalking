@@ -8,43 +8,24 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Mautic\LeadBundle\Entity\Lead;
 use Mautic\SmsBundle\Sms\TransportInterface;
+use MauticPlugin\MauticAfricastalkingBundle\Core\SDK\AfricasTalking;
 use Psr\Log\LoggerInterface;
 
 class AfricastalkingTransport implements TransportInterface {
-	/**
-	 * @var Configuration
-	 */
-	private $configuration;
 
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
+	private Configuration $configuration;
 
-	/**
-	 * @var Client
-	 */
-	private $client;
+	private LoggerInterface $logger;
 
-	/**
-	 * @var string
-	 */
-	private $sendingPhoneNumber;
+	private AfricasTalking $client;
 
-	/**
-	 * TwilioTransport constructor.
-	 */
 	public function __construct(Configuration $configuration, LoggerInterface $logger) {
 		$this->logger = $logger;
 		$this->configuration = $configuration;
 	}
 
-	/**
-	 * @param string $content
-	 *
-	 * @return bool|string
-	 */
-	public function sendSms(Lead $lead, $content) {
+	public function sendSms(Lead $lead, $content): bool
+    {
 
 		$number = $lead->getLeadPhoneNumber();
 
@@ -63,40 +44,33 @@ class AfricastalkingTransport implements TransportInterface {
 			]);
 
 			return true;
-		} catch (NumberParseException $exception) {
+		} catch (NumberParseException | Exception $exception) {
 
 			$this->logger->addWarning(
 				$exception->getMessage(),
 				['exception' => $exception]
 			);
 
-			return $exception->getMessage();
-		} catch (Exception $exception) {
-			$this->logger->addWarning(
-				$exception->getMessage(),
-				['exception' => $exception]
-			);
-
-			return $exception->getMessage();
+			return false;
 		}
-	}
+    }
 
 	/**
-	 * @param string $number
-	 *
-	 * @return string
-	 *
 	 * @throws NumberParseException
 	 */
-	private function sanitizeNumber($number) {
+	private function sanitizeNumber(string $number): string
+    {
 		$util = PhoneNumberUtil::getInstance();
 		$parsed = $util->parse($number, 'KE');
 
 		return $util->format($parsed, PhoneNumberFormat::E164);
 	}
 
-	private function configureClient() {
-		if ($this->client) {
+    /**
+     * @throws Exception
+     */
+    private function configureClient() {
+		if (isset($this->client)) {
 			// Already configured
 			return;
 		}

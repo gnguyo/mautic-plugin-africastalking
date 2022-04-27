@@ -24,11 +24,20 @@ class AfricastalkingIntegration extends AbstractIntegration implements ConfigFor
 		return 'plugins/MauticAfricastalkingBundle/Assets/img/icon.png';
 	}
 
+    public function getSecretKeys(): array
+    {
+        return ['key'];
+    }
+
 	public function getAuthenticationType(): string {
 		return 'none';
 	}
 
-	public function getRequiredKeyFields() {
+    /**
+     * @return string[]
+     */
+    public function getRequiredKeyFields(): array
+    {
 		return [
 			'username' => 'mautic.africastalking.form.username',
 			'key' => 'mautic.africastalking.form.key',

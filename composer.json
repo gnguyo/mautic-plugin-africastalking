@@ -6,31 +6,12 @@
     "config": {
         "process-timeout": 2000
     },
-    "keywords": ["mautic", "plugin", "africastalking"],
+    "keywords": ["mautic", "plugin", "integration", "africastalking"],
     "require": {
-        "php": "^7.2 || ^7.3"
+        "php": ">=7.4.0 <8.1",
+        "mautic/core-lib": "^4.0"
     },
     "extra": {
         "install-directory-name": "MauticAfricastalkingBundle"
-    },
-    "scripts": {
-        "test": [
-            "@phpunit",
-            "@phpstan",
-            "@csfixer"
-        ],
-        "quicktest": [
-            "@unit",
-            "@phpstan",
-            "@csfixer"
-        ],
-        "phpunit": "../../bin/phpunit --bootstrap ../../vendor/autoload.php --configuration phpunit.xml --fail-on-warning --testsuite=all",
-        "unit": "../../bin/phpunit --bootstrap ../../vendor/autoload.php --configuration phpunit.xml --fail-on-warning --testsuite=unit",
-        "functional": "../../bin/phpunit --bootstrap ../../vendor/autoload.php --configuration phpunit.xml --fail-on-warning --testsuite=functional",
-        "coverage": "../../bin/phpunit --bootstrap ../../vendor/autoload.php --configuration phpunit.xml --fail-on-warning --testsuite=all --coverage-text --coverage-html=Tests/Coverage",
-        "codecov": "../../bin/phpunit --bootstrap ../../vendor/autoload.php --configuration phpunit.xml --testsuite=all --coverage-clover=coverage.xml --coverage-text",
-        "phpstan": "../../bin/phpstan analyse --level=6 .",
-        "csfixer": "../../bin/php-cs-fixer fix -v --dry-run --diff . && rm .php_cs.cache",
-        "fixcs": "../../bin/php-cs-fixer fix -v . && rm .php_cs.cache"
     }
 }

@@ -6,61 +6,44 @@ use Exception;
 use Mautic\PluginBundle\Helper\IntegrationHelper;
 
 class Configuration {
-	/**
-	 * @var IntegrationHelper
-	 */
-	private $integrationHelper;
 
-	/**
-	 * @var string
-	 */
-	private $sendingPhoneNumber;
+	private IntegrationHelper $integrationHelper;
 
-	/**
-	 * @var string
-	 */
-	private $username;
+	private string $username;
 
-	/**
-	 * @var string
-	 */
-	private $apikey;
+	private string $apikey;
 
-	/**
-	 * Configuration constructor.
-	 */
-	public function __construct(IntegrationHelper $integrationHelper) {
+    private string $shortcode;
+
+    public function __construct(IntegrationHelper $integrationHelper) {
 		$this->integrationHelper = $integrationHelper;
 	}
 
-	/**
-	 * @return string
-	 *
-	 * @throws Exception
-	 */
-	public function getUsername() {
+    /**
+     * @throws Exception
+     */
+	public function getUsername(): ?string
+    {
 		$this->setConfiguration();
 
 		return $this->username;
 	}
 
 	/**
-	 * @return string
-	 *
 	 * @throws Exception
 	 */
-	public function getApiKey() {
+	public function getApiKey(): ?string
+    {
 		$this->setConfiguration();
 
 		return $this->apikey;
 	}
 
 	/**
-	 * @return string
-	 *
 	 * @throws Exception
 	 */
-	public function getShortCode() {
+	public function getShortCode(): ?string
+    {
 		$this->setConfiguration();
 
 		return empty($this->shortcode) ? null : $this->shortcode;
@@ -69,8 +52,8 @@ class Configuration {
 	/**
 	 * @throws Exception
 	 */
-	private function setConfiguration() {
-		if ($this->username) {
+	private function setConfiguration(): void {
+		if (isset($this->username)) {
 			return;
 		}
 

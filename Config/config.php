@@ -1,18 +1,13 @@
 <?php declare (strict_types = 1);
 
 return [
-	'name' => 'Example Bundle',
-	'description' => 'It does nothing. But it\'s looking great doing so!',
-	'version' => '0.0.0',
-	'author' => 'Mautic Community',
+	'name' => 'Africastalking Bundle',
+	'description' => 'Enables sending SMS using Africastalking API',
+	'version' => '0.0.1',
+	'author' => 'Gibson Nguyo',
 
 	'services' => [
-		'commands' => [
-			'cronfig.command.do_nothing' => [
-				'class' => \MauticPlugin\MauticAfricastalkingBundle\Command\DoNothing::class,
-				'tag' => 'console.command',
-			],
-		],
+		'commands' => [],
 		'other' => [
 			'mautic.sms.transport.africastalking' => [
 				'class' => \MauticPlugin\MauticAfricastalkingBundle\Core\AfricastalkingTransport::class,
